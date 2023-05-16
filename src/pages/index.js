@@ -2,7 +2,26 @@ import { Chat } from "@/components/Chat";
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 
-export default function Home() {
+// firebase 관련 모듈을 불러옵니다.
+import { db } from "@/firebase";
+import {
+  collection,
+  query,
+  doc,
+  getDocs,
+  docRef,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  orderBy,
+  where,
+} from "firebase/firestore";
+
+// DB의 todos 컬렉션 참조를 만듭니다. 컬렉션 사용시 잘못된 컬렉션 이름 사용을 방지합니다.
+const tokiCollection = collection(db, "tokis");
+
+
+export default async function Home() {
   /*
     메시지 목록을 저장하는 상태로, 메시지의 형태는 다음과 같음
     { role: "system" | "user" | "assistant", content: string }
@@ -84,6 +103,12 @@ export default function Home() {
       },
     ]);
   };
+
+ // Firestore 에 추가한 할 일을 저장합니다.
+    const docRef = await addDoc(tokiCollection, {
+      role: "USER",
+      content: message,
+   });
 
   // 메시지 목록이 업데이트 될 때마다 맨 아래로 스크롤
   useEffect(() => {
