@@ -50,7 +50,7 @@ export default async function Home() {
 
   // 메시지를 전송하는 함수
   const handleSend = async (message) => {
-    // Firestore 에 추가한 할 일을 저장합니다.
+    // Firestore 에 전송한 메세지를 저장합니다.
     const docRef = await addDoc(tokiCollection, {
       role: "user",
       content: message,
