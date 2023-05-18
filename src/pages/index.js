@@ -50,6 +50,12 @@ export default async function Home() {
 
   // 메시지를 전송하는 함수
   const handleSend = async (message) => {
+    // Firestore 에 추가한 할 일을 저장합니다.
+    const docRef = await addDoc(tokiCollection, {
+      role: "user",
+      content: message,
+   });
+
     // message 를 받아 메시지 목록에 추가
     // message 형태 = { role: "user", content: string }
     // ChatInput.js 26번째 줄 참고
@@ -104,11 +110,7 @@ export default async function Home() {
     ]);
   };
 
- // Firestore 에 추가한 할 일을 저장합니다.
-    const docRef = await addDoc(tokiCollection, {
-      role: "USER",
-      content: message,
-   });
+
 
   // 메시지 목록이 업데이트 될 때마다 맨 아래로 스크롤
   useEffect(() => {
